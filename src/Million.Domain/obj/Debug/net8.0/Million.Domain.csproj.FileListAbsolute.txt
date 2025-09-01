@@ -1,0 +1,12 @@
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\bin\Debug\net8.0\Million.Domain.deps.json
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\bin\Debug\net8.0\Million.Domain.dll
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\bin\Debug\net8.0\Million.Domain.pdb
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.AssemblyInfoInputs.cache
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.AssemblyInfo.cs
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.csproj.CoreCompileInputs.cache
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.dll
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\refint\Million.Domain.dll
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.pdb
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\ref\Million.Domain.dll
+C:\Users\DesarolloMatipos5\source\repos\Million\src\Million.Domain\obj\Debug\net8.0\Million.Domain.csproj.AssemblyReference.cache

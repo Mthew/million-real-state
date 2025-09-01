@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "p2nrFgfC7xw=",
+  "dgSpecHash": "w6q2uMo3z34=",
   "success": true,
   "projectFilePath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\Million\\src\\Million.Domain\\Million.Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\DesarolloMatipos5\\.nuget\\packages\\mongodb.bson\\3.4.3\\mongodb.bson.3.4.3.nupkg.sha512",
+    "C:\\Users\\DesarolloMatipos5\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\DesarolloMatipos5\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
