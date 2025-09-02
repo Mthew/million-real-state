@@ -5,7 +5,7 @@ namespace Million.Domain.Entities;
 
 public abstract class BaseEntity
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+    [BsonId] 
+    [BsonRepresentation(BsonType.ObjectId)] 
+    public string Id { get; set; } = string.Empty;
 }

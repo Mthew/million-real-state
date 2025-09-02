@@ -1,4 +1,5 @@
-﻿using Million.Application.Interfaces;
+﻿using Million.Application.DTOs;
+using Million.Application.Interfaces;
 using Million.Domain.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -7,7 +8,7 @@ namespace Million.Infrastructure.Persistence.Repositories;
 
 public class PropertyRepository : IPropertyRepository
 {
-    private readonly MongoDbContext _context;   
+    private readonly MongoDbContext _context;
 
     public PropertyRepository(MongoDbContext context)
     {
@@ -49,7 +50,7 @@ public class PropertyRepository : IPropertyRepository
         return await _context.Properties.Find(filter).ToListAsync();
     }
 
-    public async Task<Property?> GetPropertyDetailByIdAsync(string id)
+    public async Task<PropertyDetail?> GetPropertyDetailByIdAsync(string id)
     {
         // This pipeline uses the fluent, strongly-typed API for all stages.
         var pipeline = _context.Properties.Aggregate()
@@ -81,7 +82,7 @@ public class PropertyRepository : IPropertyRepository
             )
 
             // Stage 5: Project into the final DTO shape.
-            .Project(p => new Property
+            .Project(p => new PropertyDetail
             {
                 Id = p.Id,
                 OwnerId = p.OwnerId,
@@ -90,7 +91,7 @@ public class PropertyRepository : IPropertyRepository
                 Price = p.Price,
                 CodeInternal = p.CodeInternal,
                 Year = p.Year,
-                // The OwnerDocs array from lookup will have 0 or 1 element. FirstOrDefault handles this.
+                //The OwnerDocs array from lookup will have 0 or 1 element.FirstOrDefault handles this.
                 Owner = p.OwnerDocs.FirstOrDefault(),
                 Images = p.ImagesDocs.ToList(),
                 Traces = p.TracesDocs.ToList(),

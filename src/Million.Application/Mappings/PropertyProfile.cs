@@ -13,5 +13,6 @@ public class PropertyProfile : Profile
         CreateMap<PropertyImage, PropertyImageDto>().ReverseMap();
         CreateMap<PropertyTrace, PropertyTraceDto>().ReverseMap();
         CreateMap<Owner, OwnerDto>().ReverseMap();
+        CreateMap<PropertyDetail, PropertyDetailDto>().ReverseMap();
     }
 }

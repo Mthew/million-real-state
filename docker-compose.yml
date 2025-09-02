@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  # The .NET Web API service
+  api:
+    build:
+      context: .
+      dockerfile: src/Million.Api/Dockerfile
+    ports:
+      - "8080:8080" # Map host port 8080 to container port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # This is the crucial part: The API connects to the 'mongodb' service
+      # using its service name as the hostname.
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017/MillionRealEstate
+    depends_on:
+      - mongodb
+    networks:
+      - million-network
+
+  # The MongoDB database service
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017" # Map host port 27017 to container port 27017
+    volumes:
+      - mongodb_data:/data/db # Persist database data on the host machine
+    networks:
+      - million-network
+
+# Define the network for the services to communicate
+networks:
+  million-network:
+    driver: bridge
+
+# Define the volume for data persistence
+volumes:
+  mongodb_data:

@@ -7,7 +7,7 @@ public class PropertyTrace : BaseEntity
 {
     [BsonElement("propertyId")]
     [BsonRepresentation(BsonType.ObjectId)] // Store this Guid FK as a string
-    public string PropertyId { get; set; } = ObjectId.GenerateNewId().ToString();
+    public string PropertyId { get; set; } = string.Empty;
 
     [BsonElement("dateSale")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
