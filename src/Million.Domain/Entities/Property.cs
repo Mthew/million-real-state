@@ -7,7 +7,7 @@ public class Property : BaseEntity
 {
     [BsonElement("ownerId")]
     [BsonRepresentation(BsonType.ObjectId)] // Store this Guid FK as a string
-    public string OwnerId { get; set; } = string.Empty;
+    public string OwnerId { get; set; } = ObjectId.GenerateNewId().ToString();
 
     [BsonElement("name")]
     public string Name { get; set; } = string.Empty;

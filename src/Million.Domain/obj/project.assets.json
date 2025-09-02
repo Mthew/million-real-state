@@ -131,11 +131,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DesarolloMatipos5\\source\\repos\\Million\\src\\Million.Domain\\Million.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\DesarolloMatipos5\\source\\repos\\million-real-state\\src\\Million.Domain\\Million.Domain.csproj",
       "projectName": "Million.Domain",
-      "projectPath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\Million\\src\\Million.Domain\\Million.Domain.csproj",
+      "projectPath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\million-real-state\\src\\Million.Domain\\Million.Domain.csproj",
       "packagesPath": "C:\\Users\\DesarolloMatipos5\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\Million\\src\\Million.Domain\\obj\\",
+      "outputPath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\million-real-state\\src\\Million.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

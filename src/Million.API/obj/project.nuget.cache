@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fKYxPHiNHM4=",
+  "dgSpecHash": "mxEF1SuvXC8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\Million\\src\\Million.API\\Million.API.csproj",
+  "projectFilePath": "C:\\Users\\DesarolloMatipos5\\source\\repos\\million-real-state\\src\\Million.API\\Million.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DesarolloMatipos5\\.nuget\\packages\\automapper\\15.0.1\\automapper.15.0.1.nupkg.sha512",
     "C:\\Users\\DesarolloMatipos5\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",

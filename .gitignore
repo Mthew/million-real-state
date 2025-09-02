@@ -137,3 +137,22 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# .NET build outputs
+src/**/bin/
+src/**/obj/
+**/bin/Debug/
+**/bin/Release/
+**/obj/Debug/
+**/obj/Release/
+
+# Visual Studio files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# NuGet packages
+*.nupkg
+*.snupkg

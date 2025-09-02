@@ -7,7 +7,7 @@ public class PropertyImage : BaseEntity
 {
     [BsonElement("propertyId")]
     [BsonRepresentation(BsonType.ObjectId)] // Store this Guid FK as a string
-    public string PropertyId { get; set; } = string.Empty;
+    public string PropertyId { get; set; } = ObjectId.GenerateNewId().ToString();
 
     [BsonElement("fileUrl")]
     public string FileUrl { get; set; } = string.Empty;
