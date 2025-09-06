@@ -4,3 +4,5 @@ username => devthewai_db_user
 pass => K8cFPuk26vscyJN8
 
 conection string => mongodb+srv://devthewai_db_user:K8cFPuk26vscyJN8@cluster0.q7l0tnb.mongodb.net/
+
+C:/Users/DesarolloMatipos5/source/repos/million-real-state/collection/atlas_setup_projectId.js

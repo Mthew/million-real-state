@@ -189,6 +189,7 @@ print("Inserted 2 owners.");
 const property1Id = new ObjectId();
 const property2Id = new ObjectId();
 const property3Id = new ObjectId();
+const property4Id = new ObjectId();
 db.Properties.deleteMany({});
 db.Properties.insertMany([
   {
@@ -218,8 +219,17 @@ db.Properties.insertMany([
     codeInternal: "DL222",
     year: 2020,
   },
+  {
+    _id: property4Id,
+    ownerId: owner1Id,
+    name: "Other Downtown Loft",
+    address: "345 Art District, Apt 4C, Metropolis",
+    price: NumberDecimal("2400000.00"),
+    codeInternal: "DL333",
+    year: 2024,
+  },
 ]);
-print("Inserted 3 properties.");
+print("Inserted 4 properties.");
 
 // Property Images
 db.PropertyImages.deleteMany({});

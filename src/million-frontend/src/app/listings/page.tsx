@@ -3,13 +3,14 @@ import { FilterBar } from "@/components/features/filter-bar";
 import { PropertyList } from "@/components/features/property-list";
 import { getProperties } from "@/lib/api";
 
-export default async function ListingsPage(searchParams: {
-  [key: string]: string | string[] | undefined;
+export default async function ListingsPage({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
 }) {
   const params = new URLSearchParams();
-
-  // 2. Safely append each potential search param if it exists.
-  // This avoids issues with undefined values or complex objects.
   if (searchParams?.name) {
     params.append("name", searchParams.name as string);
   }
@@ -23,7 +24,6 @@ export default async function ListingsPage(searchParams: {
     params.append("maxPrice", searchParams.maxPrice as string);
   }
 
-  // Now, 'params' is a correctly constructed URLSearchParams object.
   const properties = await getProperties(params);
 
   return (

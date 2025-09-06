@@ -19,6 +19,7 @@ async function fetcher<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
 
   try {
+    console.log("Fetching URL:", url, "with options:", options);
     const response = await fetch(url, options);
 
     if (response.status === 404) {
@@ -73,7 +74,7 @@ export class ApiError extends Error {
 export const getProperties = (
   params: URLSearchParams
 ): Promise<PropertySummary[]> => {
-  console.log("Fetching properties with params:", params.toString());
+  console.log("Fetching to URL =======> ", `/Properties?${params.toString()}`);
   return fetcher<PropertySummary[]>(`/Properties?${params.toString()}`);
 };
 

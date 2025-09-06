@@ -51,7 +51,13 @@ interface PropertyDetail {
   traces: PropertyTrace[];
 }
 
-export default function PropertyDetailPage() {
+export default function PropertyDetailPage({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
+}) {
   const params = useParams();
   const router = useRouter();
   const [property, setProperty] = useState<PropertyDetail | null>(null);
