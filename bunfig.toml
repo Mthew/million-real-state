@@ -1,0 +1,15 @@
+# Bun configuration for monorepo
+[install]
+cache = true
+production = false
+
+# Define workspaces
+[workspaces]
+packages = [
+  "src/million-frontend"
+]
+
+# Global scripts
+[scripts]
+dev = "concurrently \"bun run frontend:dev\" \"bun run api:dev\""
+build = "bun run frontend:build && bun run api:build"

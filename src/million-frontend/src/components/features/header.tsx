@@ -1,21 +1,27 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-background/95">
+    <header className="border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-background/95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <div className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-foreground tracking-tight">
-                Million Luxury
-              </div>
+              <Image
+                src="/logo-black.svg"
+                alt="Logo"
+                width={120}
+                height={40}
+                className="h-8 sm:h-10 lg:h-12 w-auto"
+              />
+              {/* <div className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-foreground tracking-tight"></div> */}
             </Link>
           </div>
 
@@ -23,19 +29,21 @@ export function Header() {
           <nav className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-6 xl:space-x-8">
               <Link
-                href="/listings"
+                href="/"
                 className="text-foreground hover:text-accent transition-colors duration-200 px-3 py-2 text-sm xl:text-base font-medium tracking-wide"
               >
                 Listings
               </Link>
               <Link
-                href="/about"
+                href="https://www.millionluxury.com/our-team.html"
+                target="_blank"
                 className="text-foreground hover:text-accent transition-colors duration-200 px-3 py-2 text-sm xl:text-base font-medium tracking-wide"
               >
                 About Us
               </Link>
               <Link
-                href="/contact"
+                href="https://www.millionluxury.com/"
+                target="_blank"
                 className="text-foreground hover:text-accent transition-colors duration-200 px-3 py-2 text-sm xl:text-base font-medium tracking-wide"
               >
                 Contact

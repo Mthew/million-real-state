@@ -1,0 +1,30 @@
+{
+  "name": "million-real-state",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "src/million-frontend"
+  ],
+  "scripts": {
+    "dev": "cd src/million-frontend && bun run dev",
+    "build": "cd src/million-frontend && bun run build",
+    "start": "cd src/million-frontend && bun run start",
+    "lint": "cd src/million-frontend && bun run lint",
+    "frontend:dev": "cd src/million-frontend && bun run dev",
+    "frontend:build": "cd src/million-frontend && bun run build",
+    "frontend:start": "cd src/million-frontend && bun run start",
+    "api:dev": "dotnet run --project src/Million.API",
+    "api:build": "dotnet build src/Million.API",
+    "api:test": "dotnet test src/Million.API.Tests",
+    "dev:all": "concurrently \"bun run frontend:dev\" \"bun run api:dev\"",
+    "install:all": "bun install && cd src/million-frontend && bun install"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "concurrently": "^8.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

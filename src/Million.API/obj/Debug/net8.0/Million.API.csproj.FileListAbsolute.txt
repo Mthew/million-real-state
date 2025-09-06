@@ -407,7 +407,6 @@ C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\D
 C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\Million..FEE40406.Up2Date
 C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\Million.API.dll
 C:\Users\DesarolloMatipos5\source\repos\million-real-state\src\Million.API\obj\Debug\net8.0\refint\Million.API.dll

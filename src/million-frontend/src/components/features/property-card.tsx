@@ -1,16 +1,9 @@
+import { PropertySummary } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Property {
-  idOwner: string;
-  name: string;
-  address: string;
-  price: number;
-  imageUrl: string;
-}
-
 interface PropertyCardProps {
-  property: Property;
+  property: PropertySummary;
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
@@ -24,7 +17,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
   };
 
   return (
-    <Link href={`/property/${property.idOwner}`} className="block">
+    <Link href={`/property/${property.id}`} className="block">
       <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer transform hover:-translate-y-1 h-full flex flex-col">
         {/* Image Container */}
         <div className="relative h-96 overflow-hidden flex-shrink-0">
