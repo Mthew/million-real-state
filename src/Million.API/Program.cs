@@ -61,4 +61,6 @@ app.MapControllers();
 // Run the application
 app.Run();
 
+app.Logger.LogInformation($"Million Real Estate API started");
+
 public partial class Program { }

@@ -20,7 +20,7 @@ public class PropertyRepository : IPropertyRepository
         return await _context.Properties.Find(p => p.Id.Equals(id)).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Property>> GetFilteredAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice)
+    public async Task<IEnumerable<PropertyDto>> GetFilteredAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice)
     {
         var filterBuilder = Builders<Property>.Filter;
         var filter = filterBuilder.Empty;
@@ -47,7 +47,30 @@ public class PropertyRepository : IPropertyRepository
             filter &= filterBuilder.Lte(p => p.Price, maxPrice.Value);
         }
 
-        return await _context.Properties.Find(filter).ToListAsync();
+
+        var pipeline = _context.Properties.Aggregate()
+            .Match(filter)
+            .Lookup<Property, PropertyImage, PropertyWithJoins>(
+                _context.PropertyImages,
+                property => property.Id,
+                image => image.PropertyId,
+                result => result.ImagesDocs
+            )
+            .Project(p => new PropertyDto
+            {
+                Id = p.Id,
+                OwnerId = p.OwnerId,
+                Name = p.Name,
+                Address = p.Address,
+                Price = p.Price,
+                CodeInternal = p.CodeInternal,
+                Year = p.Year,
+                ImageUrl = p.ImagesDocs.FirstOrDefault(x => x.IsEnabled == true).FileUrl ?? ""
+            });
+
+        return await pipeline.ToListAsync();
+
+        //return await _context.Properties.Find(filter).ToListAsync();
     }
 
     public async Task<PropertyDetail?> GetPropertyDetailByIdAsync(string id)
@@ -93,7 +116,7 @@ public class PropertyRepository : IPropertyRepository
                 Year = p.Year,
                 //The OwnerDocs array from lookup will have 0 or 1 element.FirstOrDefault handles this.
                 Owner = p.OwnerDocs.FirstOrDefault(),
-                Images = p.ImagesDocs.ToList(),
+                Images = p.ImagesDocs.Where(img => img.IsEnabled).ToList(),
                 Traces = p.TracesDocs.ToList(),
                 // Server-side logic to find the first enabled image URL.
                 ImageUrl = p.ImagesDocs.FirstOrDefault(img => img.IsEnabled).FileUrl ?? ""

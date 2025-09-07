@@ -1,234 +1,498 @@
-# Million Real Estate - Backend API
+# Million Real Estate - Monorepo
 
-This document provides all the necessary information to set up, run, and test the backend API for the Million Real Estate portal. This API is built with .NET 8, C#, and MongoDB, following Clean Architecture principles to ensure a robust, scalable, and maintainable system.
+A comprehensive, luxury real estate portal built with modern full-stack technologies. This monorepo contains both the frontend (Next.js 15) and backend (.NET 8) applications, designed to deliver an elegant and sophisticated experience for high-end property discovery and management.
 
-## Table of Contents
+## 📋 Table of Contents
 
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Project Architecture](#project-architecture)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [1. Clone the Repository](#1-clone-the-repository)
-  - [2. Configure Database](#2-configure-database)
-  - [3. Configure User Secrets](#3-configure-user-secrets)
-  - [4. Run the Application](#4-run-the-application)
-- [Running the Database Setup Script](#running-the-database-setup-script)
-- [API Endpoints & Documentation](#api-endpoints--documentation)
-- [Running the Tests](#running-the-tests)
-- [Running with Docker (Recommended)](#running-with-docker-recommended)
+- [Project Overview](#-project-overview)
+- [Architecture](#-architecture)
+- [Project Structure](#-project-structure)
+- [Technology Stack](#-technology-stack)
+- [Prerequisites](#-prerequisites)
+- [Quick Start](#-quick-start)
+- [Development Workflows](#-development-workflows)
+- [Deployment](#-deployment)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
 
-## Features
+## 🌟 Project Overview
 
-- **Property Listings**: Retrieve a list of all available properties.
-- **Advanced Filtering**: Filter properties by name, address, and price range.
-- **Detailed Property View**: Fetch a comprehensive view of a single property, including owner details, images, and sales history, in a single optimized query.
-- **Clean Architecture**: A well-structured, decoupled codebase that separates concerns for high maintainability.
-- **Optimized for Performance**: Utilizes MongoDB's aggregation pipeline for efficient data retrieval.
+Million Real Estate is a premium real estate portal targeting affluent property buyers and investors. The platform provides an exclusive experience for browsing and discovering luxury properties with a focus on visual storytelling and seamless user interaction.
 
-## Technology Stack
+### Key Features
 
-- **Framework**: .NET 8
+- 🏠 **Premium Property Listings** - Browse luxury properties with advanced filtering
+- 📱 **Mobile-First Design** - Responsive across all device types
+- 🖼️ **Immersive Gallery** - High-resolution property imagery
+- 🔍 **Advanced Search** - Filter by name, address, and price range
+- ⚡ **High Performance** - Optimized for speed and scalability
+- 🎨 **Luxury Aesthetics** - Premium design with sophisticated typography
+- ♿ **Accessibility** - WCAG 2.1 Level AA compliance
+- 🧪 **Fully Tested** - Comprehensive test coverage
+
+### Target Personas
+
+- **The Investor (Isabella)**: Data-driven professionals seeking valuable properties with clear financial metrics
+- **The Dream Home Seeker (David)**: High-net-worth individuals looking for aesthetic, lifestyle-focused primary residences
+
+## 🏗️ Architecture
+
+The project follows a **Clean Architecture** approach with clear separation of concerns:
+
+### Backend Architecture (.NET 8)
+
+```
+Million.API/              # Presentation Layer (Controllers, Middleware)
+├── Controllers/          # API endpoints
+├── Middleware/          # Cross-cutting concerns
+└── Program.cs           # Application entry point
+
+Million.Application/      # Application Layer (Use Cases, DTOs)
+├── DTOs/                # Data Transfer Objects
+├── Features/            # CQRS Commands/Queries with MediatR
+├── Interfaces/          # Application contracts
+└── Mappings/            # Object mappings
+
+Million.Domain/           # Domain Layer (Entities, Business Rules)
+├── Entities/            # Core business entities
+├── CustomEntities/      # Domain-specific models
+└── Exceptions/          # Domain exceptions
+
+Million.Infrastructure/   # Infrastructure Layer (Data Access, External Services)
+├── Persistence/         # MongoDB data access
+└── Settings/            # Configuration settings
+```
+
+### Frontend Architecture (Next.js 15)
+
+```
+src/
+├── app/                 # Next.js App Router (Pages & Routing)
+├── components/          # UI Components
+│   ├── ui/             # Atomic components
+│   └── features/       # Composed components
+├── lib/                # Business Logic & Utilities
+├── stores/             # Global State (Zustand)
+└── types/              # TypeScript definitions
+```
+
+### Data Flow
+
+1. **Frontend** makes API requests to the .NET backend
+2. **Controllers** receive requests and delegate to Application layer
+3. **MediatR** handles CQRS commands/queries
+4. **MongoDB** provides data persistence
+5. **DTOs** ensure clean data contracts between layers
+
+## 📁 Project Structure
+
+```
+million-real-state/                    # Monorepo root
+├── 📄 package.json                   # Monorepo workspace configuration
+├── 📄 docker-compose.yml             # Full-stack containerization
+├── 📄 Million.sln                    # .NET solution file
+├── 📄 bunfig.toml                    # Bun configuration
+├── 📁 src/                           # Source code
+│   ├── 📁 million-frontend/          # Next.js 15 frontend
+│   │   ├── 📄 package.json
+│   │   ├── 📁 src/
+│   │   │   ├── 📁 app/              # App Router pages
+│   │   │   ├── 📁 components/       # React components
+│   │   │   ├── 📁 lib/              # Utilities & API
+│   │   │   ├── 📁 stores/           # State management
+│   │   │   └── 📁 types/            # TypeScript definitions
+│   │   └── 📁 __tests__/            # Frontend tests
+│   ├── 📁 Million.API/               # .NET 8 Web API
+│   ├── 📁 Million.Application/       # Application layer
+│   ├── 📁 Million.Domain/            # Domain layer
+│   ├── 📁 Million.Infrastructure/    # Infrastructure layer
+│   └── 📁 Million.API.Tests/         # Backend tests
+├── 📁 doc/                           # Project documentation
+│   ├── 📄 front-end-spec.md         # Frontend specifications
+│   ├── 📄 prd.md                    # Product requirements
+│   └── 📄 database-config.md        # Database setup
+├── 📁 collection/                    # Database setup scripts
+│   └── 📄 seed_setup.js             # MongoDB initialization
+└── 📄 README.md                     # This file
+```
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
+- **Language**: TypeScript
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **UI Components**: [Radix UI](https://radix-ui.com/) + Custom Components
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
+- **Testing**: [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+#### Frontend Screenshots
+
+**Property Listings Page**
+![Million Listings Page](million-listings-page.png)
+_Responsive property listings with advanced filtering capabilities_
+
+**Property Detail Page**
+![Million Property Detail Page](million-property-detail-page.png)
+_Immersive property detail view with gallery, owner information, and sales history_
+
+### Backend
+
+- **Framework**: .NET 8 Web API
 - **Language**: C#
 - **Database**: MongoDB
-- **Architecture**: Clean Architecture, CQRS with MediatR
-- **API Documentation**: Swagger (OpenAPI)
-- **Testing**: NUnit, Moq, FluentAssertions, Mongo2Go
+- **Architecture**: Clean Architecture with CQRS
+- **Mediator**: [MediatR](https://github.com/jbogard/MediatR)
+- **Testing**: NUnit + Moq + FluentAssertions
+- **Documentation**: Swagger/OpenAPI
 
-## Project Architecture
+#### API Documentation
 
-The solution is structured following the principles of Clean Architecture to create a separation of concerns:
+![Million API Documentation](million-api-docs.png)
+_Comprehensive Swagger/OpenAPI documentation for all endpoints_
 
-- **`Million.Domain`**: Contains the core business entities and logic. It has no external dependencies.
-- **`Million.Application`**: Implements the application's use cases (queries and commands) and defines interfaces for external services like repositories.
-- **`Million.Infrastructure`**: Contains the implementation for external services, primarily the MongoDB data access layer.
-- **`Million.Api`**: The presentation layer, which exposes the application's functionality via a RESTful API.
-- **`Million.Api.Tests`**: Contains unit and integration tests for the API.
+### Infrastructure
 
-## Prerequisites
+- **Package Manager**: [Bun](https://bun.sh/)
+- **Containerization**: Docker + Docker Compose
+- **Development**: Turbopack (Next.js)
+- **Database Tools**: MongoDB Compass, mongosh
 
-Before you begin, ensure you have the following installed on your machine:
+## 📋 Prerequisites
 
-- **.NET 8 SDK**: [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
-- **Visual Studio 2022**: [Download here](https://visualstudio.microsoft.com/vs/)
-- **MongoDB**: Can be a local instance, a Docker container, or a MongoDB Atlas cluster.
-- **mongosh**: The MongoDB Shell. [Installation Guide](https://www.mongodb.com/docs/mongodb-shell/install/)
+Before getting started, ensure you have the following installed:
 
-## Getting Started
+### Required
 
-Follow these steps to get the backend up and running locally.
+- **Node.js 18+** (recommended: Node.js 20+)
+- **Bun** - [Install Bun](https://bun.sh/docs/installation)
+- **.NET 8 SDK** - [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **MongoDB** - [Local install](https://www.mongodb.com/try/download/community) or [MongoDB Atlas](https://www.mongodb.com/atlas)
+- **Git** - [Download here](https://git-scm.com/)
 
-### 1. Clone the Repository
+### Optional (for Docker)
 
-```bash
-git clone <your-repository-url>
-cd <your-repository-folder>
-```
+- **Docker Desktop** - [Install here](https://www.docker.com/products/docker-desktop/)
 
-### 2. Configure Database
+### Development Tools (Recommended)
 
-The application requires a connection to a MongoDB instance. The setup script will create the `MillionRealEstate` database and collections for you.
+- **Visual Studio 2022** or **VS Code**
+- **MongoDB Compass** - GUI for MongoDB
+- **Postman** or similar API testing tool
 
-First, run the setup script to initialize your database with the correct schema, indexes, and sample data.
+## 🚀 Quick Start
 
-See the section [Running the Database Setup Script](#running-the-database-setup-script) below for detailed instructions.
+### Option 1: Full Docker Setup (Recommended)
 
-### 3. Configure User Secrets
-
-For local development, we use the .NET Secret Manager to handle the database connection string, keeping it out of the `appsettings.json` file.
-
-1.  **Navigate to the API project directory** in your terminal:
-
-    ```bash
-    cd src/Million.Api
-    ```
-
-2.  **Initialize User Secrets** for the project:
-
-    ```bash
-    dotnet user-secrets init
-    ```
-
-3.  **Set the Connection String Secret**:
-    Replace `<YOUR_MONGODB_CONNECTION_STRING>` with your actual connection string.
-
-    _For a default local instance:_
-
-    ```bash
-    dotnet user-secrets set "MongoDbSettings:ConnectionString" "mongodb://localhost:27017/MillionRealEstate"
-    ```
-
-    _For MongoDB Atlas:_
-
-    ```bash
-    dotnet user-secrets set "MongoDbSettings:ConnectionString" "mongodb+srv://<user>:<password>@<cluster-url>/MillionRealEstate?retryWrites=true&w=majority"
-    ```
-
-The application is configured to automatically use this secret in your local development environment, overriding any value in `appsettings.json`.
-
-### 4. Run the Application
-
-You can now run the application from Visual Studio 2022:
-
-1.  Open the `Million.sln` solution file in Visual Studio.
-2.  Set `Million.Api` as the startup project (it should be the default).
-3.  Press `F5` or the "Start" button to build and run the application.
-
-The application will launch, and a browser window should open to the Swagger UI, where you can explore and interact with the API endpoints.
-
-## Running the Database Setup Script
-
-The database initialization script is located at `./collections/atlas_setup.js`. This script creates collections, defines schema validation, builds performance indexes, and seeds the database with sample data.
-
-1.  **Open a new terminal or command prompt.**
-
-2.  **Navigate to the script's directory:**
-
-    ```bash
-    cd path/to/your/project/collections
-    ```
-
-3.  **Run the script using `mongosh`**:
-
-    _If connecting to a local MongoDB instance:_
-
-    ```bash
-    mongosh < atlas_setup.js
-    ```
-
-    _If connecting to MongoDB Atlas, you need to provide your connection string:_
-
-    ```bash
-    mongosh "mongodb+srv://<user>:<password>@<cluster-url>/MillionRealEstate" --file atlas_setup.js
-    ```
-
-After the script finishes, your database will be ready for the application.
-
-## API Endpoints & Documentation
-
-Once the application is running, API documentation is available via Swagger UI. Navigate to the root URL of the application in your browser (e.g., `https://localhost:7123/`) to view the interactive documentation.
-
-Key endpoints include:
-
-- `GET /api/properties`: Retrieves a list of properties with support for filtering.
-- `GET /api/properties/{id}`: Retrieves the full details of a single property.
-
-## Running the Tests
-
-The solution includes a dedicated test project (`Million.Api.Tests`) with both unit and integration tests.
-
-To run the tests:
-
-1.  **From Visual Studio:**
-
-    - Open the **Test Explorer** window (`Test > Test Explorer`).
-    - Click the "Run All Tests" button.
-
-2.  **From the .NET CLI:**
-    - Navigate to the root directory of the solution.
-    - Run the command:
-      ```bash
-      dotnet test
-      ```
-
-The integration tests use an in-memory MongoDB provider (`Mongo2Go`), so they do not require a running MongoDB instance and will not affect your local database. They run in complete isolation.
-
-## Running with Docker (Recommended)
-
-This is the easiest way to run the entire backend stack, including the MongoDB database, with a single command.
-
-### Prerequisites for Docker
-
-- **Docker Desktop**: [Install Docker Desktop](https://www.docker.com/products/docker-desktop/)
-
-### 1. Build and Run the Containers
-
-From the root directory of the solution (where the `docker-compose.yml` file is), run the following command:
+The easiest way to run the entire application:
 
 ```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd million-real-state
+
+# 2. Start all services (API + MongoDB)
 docker-compose up --build
+
+# 3. Initialize database (in a new terminal)
+mongosh mongodb://localhost:27017/MillionRealEstate collection/seed_setup.js
+
+# 4. Start frontend (in a new terminal)
+bun run frontend:dev
 ```
 
-- `--build`: This flag tells Docker Compose to build the API image from your `Dockerfile` before starting the containers. You only need to use it the first time or after you make code changes.
+**Access Points:**
 
-This command will:
+- Frontend: http://localhost:3000
+- API: http://localhost:8080
+- MongoDB: mongodb://localhost:27017
 
-1.  Pull the official MongoDB image from Docker Hub.
-2.  Build your Million.Api Docker image.
-3.  Start both containers and connect them on a shared network.
+### Option 2: Local Development Setup
 
-You will see logs from both the API and the database in your terminal.
-
-### 2. Initialize the Database (First-Time Setup)
-
-After starting the containers, the MongoDB database will be running but empty. You need to run the setup script against the **Docker container**.
-
-1.  **Open a new, separate terminal window.** (Leave the `docker-compose up` command running in the first one).
-
-2.  **Run the setup script:**
-    From the root of your project, execute the following `mongosh` command. It connects to the MongoDB instance running inside Docker (which we exposed on `localhost:27017`).
-
-    ```bash
-    mongosh "mongodb://localhost:27017/MillionRealEstate" --file ./collections/atlas_setup.js
-    ```
-
-Your database is now initialized and seeded with data.
-
-### 3. Access the API
-
-The API is now running and accessible on your host machine:
-
-- **Swagger UI / API Documentation**: [http://localhost:8080](http://localhost:8080)
-- **API Base URL**: `http://localhost:8080`
-
-### 4. Stopping the Application
-
-To stop the containers, go to the terminal where `docker-compose up` is running and press `Ctrl + C`.
-
-To stop and remove the containers completely, you can run:
+For active development with hot reloading:
 
 ```bash
-docker-compose down
+# 1. Clone and install dependencies
+git clone <repository-url>
+cd million-real-state
+bun run install:all
+
+# 2. Setup MongoDB (local or Atlas)
+# Update connection string in src/Million.API/appsettings.json
+
+# 3. Initialize database
+mongosh mongodb://localhost:27017/MillionRealEstate collection/seed_setup.js
+
+# 4. Start both frontend and backend
+bun run dev:all
+
+# Or start individually:
+# Terminal 1: bun run frontend:dev
+# Terminal 2: bun run api:dev
 ```
 
-_Note: Using `docker-compose down -v` will also remove the `mongodb_data` volume, deleting all your database data._
+## 🔄 Development Workflows
+
+### Available Commands
+
+| Command                  | Description                              |
+| ------------------------ | ---------------------------------------- |
+| `bun run dev:all`        | Start both frontend and API concurrently |
+| `bun run frontend:dev`   | Start Next.js development server         |
+| `bun run api:dev`        | Start .NET API in development mode       |
+| `bun run frontend:build` | Build frontend for production            |
+| `bun run api:build`      | Build .NET API                           |
+| `bun run api:test`       | Run backend tests                        |
+| `bun run install:all`    | Install all dependencies                 |
+
+### Frontend Development
+
+```bash
+# Navigate to frontend
+cd src/million-frontend
+
+# Install dependencies
+bun install
+
+# Start development server
+bun run dev
+
+# Run tests
+bun test
+bun run test:watch
+bun run test:coverage
+
+# Build for production
+bun run build
+bun run start
+```
+
+### Backend Development
+
+```bash
+# Build the solution
+dotnet build Million.sln
+
+# Run the API
+dotnet run --project src/Million.API
+
+# Run tests
+dotnet test src/Million.API.Tests
+
+# Watch mode (auto-restart)
+dotnet watch run --project src/Million.API
+```
+
+### Database Management
+
+```bash
+# Initialize database with sample data
+mongosh mongodb://localhost:27017/MillionRealEstate collection/seed_setup.js
+
+# Connect to database
+mongosh mongodb://localhost:27017/MillionRealEstate
+
+# Reset database (run seed script again)
+mongosh mongodb://localhost:27017/MillionRealEstate collection/seed_setup.js
+```
+
+## 🐳 Deployment
+
+### Docker Production Deployment
+
+```bash
+# Build and start production containers
+docker-compose up --build -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Reset everything (including database)
+docker-compose down -v
+```
+
+### Manual Production Deployment
+
+```bash
+# Build frontend
+cd src/million-frontend
+bun run build
+
+# Build backend
+dotnet publish src/Million.API -c Release -o publish
+
+# Configure production environment variables
+# Deploy to your hosting platform
+```
+
+## 📚 Documentation
+
+This project includes comprehensive documentation to guide development and usage:
+
+### 📋 Product Requirements Document ([prd.md](./doc/prd.md))
+
+The complete product specification document that defines the goals, functional and non-functional requirements for the Million Real Estate portal. This document outlines:
+
+- Project goals and business context
+- Detailed functional requirements (property listings, filtering, detailed views)
+- Technical requirements (.NET 8, MongoDB, Next.js, responsive design)
+- User interface design goals and target personas
+- Epic breakdown for development phases
+
+### 🎨 Frontend Specification ([front-end-spec.md](./doc/front-end-spec.md))
+
+A comprehensive UI/UX specification document that defines the user experience goals, design principles, and technical implementation details for the frontend application. This includes:
+
+- Target user personas (The Investor & The Dream Home Seeker)
+- Information architecture and user flows
+- Responsive design strategy and breakpoints
+- Component library specifications
+- Branding guidelines and style guide (colors, typography, spacing)
+- Accessibility requirements (WCAG 2.1 Level AA)
+- Performance considerations and animation guidelines
+
+### 🗄️ Database Configuration ([database-config.md](./doc/database-config.md))
+
+Detailed information about the MongoDB database schema, setup, and configuration requirements.
+
+### 📖 Component Documentation
+
+- **Frontend**: [src/million-frontend/README.md](./src/million-frontend/README.md) - Detailed frontend architecture, testing, and development guide
+- **Backend**: [src/Million.API/README.md](./src/Million.API/README.md) - Complete backend API documentation, endpoints, and testing guide
+
+### 🏗️ Architecture Documentation
+
+- **Frontend Architecture**: [src/million-frontend/doc/architecture-spect.md](./src/million-frontend/doc/architecture-spect.md) - Detailed frontend architectural decisions and patterns
+- **Monorepo Setup**: [README_MONOREPO.md](./README_MONOREPO.md) - Bun workspace configuration and management
+
+## 🧪 Testing
+
+### Frontend Tests
+
+```bash
+cd src/million-frontend
+
+# Run all tests
+bun test
+
+# Watch mode
+bun run test:watch
+
+# Coverage report
+bun run test:coverage
+```
+
+### Backend Tests
+
+```bash
+# Run all backend tests
+dotnet test src/Million.API.Tests
+
+# Run with coverage
+dotnet test src/Million.API.Tests --collect:"XPlat Code Coverage"
+
+# Run specific test
+dotnet test src/Million.API.Tests --filter "ClassName"
+```
+
+### Integration Testing
+
+The project includes comprehensive integration tests that:
+
+- Test complete user flows
+- Validate API endpoints with real database operations
+- Ensure frontend-backend integration works correctly
+
+## 🌐 Environment Configuration
+
+### Frontend Environment Variables
+
+```bash
+# src/million-frontend/.env.local
+NEXT_PUBLIC_API_URL=http://localhost:8080/api
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Backend Configuration
+
+```bash
+# User Secrets (Development)
+dotnet user-secrets set "MongoDbSettings:ConnectionString" "mongodb://localhost:27017/MillionRealEstate" --project src/Million.API
+```
+
+### Docker Environment
+
+Environment variables are configured in `docker-compose.yml` for containerized deployment.
+
+## 🤝 Contributing
+
+### Development Workflow
+
+1. **Create a feature branch**: `git checkout -b feat/feature-name`
+2. **Make your changes** following the established patterns
+3. **Write/update tests** for new functionality
+4. **Ensure all tests pass**: `bun run test` and `dotnet test`
+5. **Run linting**: `bun run lint`
+6. **Commit with conventional commits**: `feat: add property filtering`
+7. **Create pull request** with detailed description
+
+### Code Standards
+
+- **Frontend**: TypeScript, ESLint, Prettier
+- **Backend**: C# coding conventions, XML documentation
+- **Testing**: Minimum 50% code coverage
+- **Documentation**: Update relevant README files
+
+### Architecture Principles
+
+- **Clean Architecture**: Maintain separation of concerns
+- **SOLID Principles**: Follow SOLID design principles
+- **DRY**: Don't repeat yourself
+- **KISS**: Keep it simple and stupid
+- **YAGNI**: You ain't gonna need it
+
+## 📊 Performance Benchmarks
+
+### Frontend Performance Goals
+
+- **Largest Contentful Paint (LCP)**: < 2.5 seconds
+- **Interaction to Next Paint (INP)**: < 200ms
+- **Cumulative Layout Shift (CLS)**: < 0.1
+- **First Contentful Paint (FCP)**: < 1.8 seconds
+
+### Backend Performance Goals
+
+- **API Response Time**: < 200ms for simple queries
+- **Database Query Time**: < 100ms for filtered searches
+- **Concurrent Users**: Support 1000+ concurrent requests
+
+## 🔒 Security Considerations
+
+- **API Security**: Input validation, sanitization
+- **Database Security**: Connection string protection
+- **Frontend Security**: XSS protection, secure headers
+- **Environment Variables**: Sensitive data in environment variables only
+
+## 📄 License
+
+This project is part of the Million Real Estate application suite. All rights reserved.
+
+## 📞 Support & Contact
+
+For questions, issues, or contributions:
+
+- **Developer**: [Mthew](mailto:dev.thew.ai@gmail.com)
+- **Repository**: [GitHub](https://github.com/Mthew/million-real-state)
+- **Documentation**: Check the `doc/` directory for detailed specifications
+
+---
+
+**Built with ❤️ using modern full-stack technologies**
+
+_Last updated: September 2025_

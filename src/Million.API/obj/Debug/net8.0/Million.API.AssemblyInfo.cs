@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Million.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+398b8f73b41d64daa91b7ec8b3aac08052e72019")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f3e2674f184e1cd4d9cab9a9a4d17010c4a003c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Million.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Million.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

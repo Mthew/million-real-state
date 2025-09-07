@@ -189,6 +189,7 @@ print("Inserted 2 owners.");
 const property1Id = new ObjectId();
 const property2Id = new ObjectId();
 const property3Id = new ObjectId();
+
 db.Properties.deleteMany({});
 db.Properties.insertMany([
   {
@@ -219,7 +220,7 @@ db.Properties.insertMany([
     year: 2020,
   },
 ]);
-print("Inserted 3 properties.");
+print("Inserted 4 properties.");
 
 // Property Images
 db.PropertyImages.deleteMany({});

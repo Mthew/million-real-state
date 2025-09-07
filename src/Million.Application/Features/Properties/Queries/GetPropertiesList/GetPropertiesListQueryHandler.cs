@@ -18,14 +18,10 @@ public class GetPropertiesListQueryHandler : IRequestHandler<GetPropertiesListQu
 
     public async Task<IEnumerable<PropertyDto>> Handle(GetPropertiesListQuery request, CancellationToken cancellationToken)
     {
-        var properties = await _propertyRepository.GetFilteredAsync(
+        return await _propertyRepository.GetFilteredAsync(
             request.Name,
             request.Address,
             request.MinPrice,
             request.MaxPrice);
-
-        var propertyDtos = _mapper.Map<IEnumerable<PropertyDto>>(properties);
-
-        return propertyDtos;
     }
 }
