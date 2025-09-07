@@ -15,6 +15,10 @@ const customJestConfig = {
   testEnvironment: "jest-environment-jsdom",
   moduleDirectories: ["node_modules", "<rootDir>/"],
   testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  testMatch: [
+    "**/__tests__/**/*.(test|spec).(js|jsx|ts|tsx)",
+    "**/*.(test|spec).(js|jsx|ts|tsx)",
+  ],
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
     "!src/**/*.d.ts",
