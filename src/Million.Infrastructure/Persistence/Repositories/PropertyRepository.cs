@@ -116,7 +116,7 @@ public class PropertyRepository : IPropertyRepository
                 Year = p.Year,
                 //The OwnerDocs array from lookup will have 0 or 1 element.FirstOrDefault handles this.
                 Owner = p.OwnerDocs.FirstOrDefault(),
-                Images = p.ImagesDocs.ToList(),
+                Images = p.ImagesDocs.Where(img => img.IsEnabled).ToList(),
                 Traces = p.TracesDocs.ToList(),
                 // Server-side logic to find the first enabled image URL.
                 ImageUrl = p.ImagesDocs.FirstOrDefault(img => img.IsEnabled).FileUrl ?? ""
