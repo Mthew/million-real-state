@@ -16,7 +16,7 @@ export const ListingsHero = () => {
         </h1>
 
         <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground/80 max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto text-pretty leading-relaxed font-light mb-8 sm:mb-10 lg:mb-12">
-          Discover our meticulously curated collection of the world's most
+          Discover our meticulously curated collection of the world&apos;s most
           prestigious luxury real estate investments and architectural
           masterpieces
         </p>

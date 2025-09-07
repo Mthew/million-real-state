@@ -1,4 +1,3 @@
-import { Header } from "@/components/features/header";
 import { FilterBar } from "@/components/features/filter-bar";
 import { PropertyList } from "@/components/features/property-list";
 import { getProperties } from "@/lib/api";
@@ -28,8 +27,6 @@ export default async function ListingsPage({
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-12 lg:py-16">
         {/* Filter Bar */}
         <FilterBar />

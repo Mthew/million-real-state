@@ -1,95 +1,83 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Calendar,
-  MapPin,
-  User,
-  DollarSign,
-  Camera,
-} from "lucide-react";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { ArrowLeft, Calendar, MapPin, User, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PropertyDetail } from "@/types";
+import { getPropertyById } from "@/lib/api";
 
-interface PropertyOwner {
-  id: string;
-  name: string;
-  address: string;
-  photoUrl: string;
-  birthday: string;
-}
+import Image from "next/image";
+import { PropertyImageGallery } from "@/components/features/Image-gallery";
 
-interface PropertyImage {
-  id: string;
-  propertyId: string;
-  fileUrl: string;
-  isEnabled: boolean;
-}
-
-interface PropertyTrace {
-  id: string;
-  propertyId: string;
-  dateSale: string;
-  name: string;
-  value: number;
-  tax: number;
-}
-
-interface PropertyDetail {
-  id: string;
-  ownerId: string;
-  name: string;
-  address: string;
-  price: number;
-  codeInternal: string;
-  year: number;
-  imageUrl: string;
-  owner: PropertyOwner;
-  images: PropertyImage[];
-  traces: PropertyTrace[];
-}
-
-export default function PropertyDetailPage({
-  searchParams,
-}: {
+interface PropertyDetailPageProps {
+  params: {
+    id: string;
+  };
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
-}) {
-  const params = useParams();
-  const router = useRouter();
-  const [property, setProperty] = useState<PropertyDetail | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+}
 
-  useEffect(() => {
-    const fetchProperty = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/properties/${params.id}`);
+// Server-side data fetching
+async function getPropertyData(id: string): Promise<PropertyDetail> {
+  try {
+    const property = await getPropertyById(id);
+    return property;
+  } catch (error) {
+    console.error("Error fetching property:", error);
+    notFound();
+  }
+}
 
-        if (!response.ok) {
-          throw new Error("Property not found");
-        }
+// Generate metadata for SEO
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  try {
+    const property = await getPropertyById(params.id);
 
-        const data = await response.json();
-        setProperty(data.property);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load property"
-        );
-      } finally {
-        setIsLoading(false);
-      }
+    const formatPrice = (price: number) => {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(price);
     };
 
-    if (params.id) {
-      fetchProperty();
-    }
-  }, [params.id]);
+    return {
+      title: `${property.name} - ${formatPrice(
+        property.price
+      )} | Million Real Estate`,
+      description: `Luxury property located at ${property.address}. Built in ${property.year}. Contact us for more information about this exclusive real estate opportunity.`,
+      openGraph: {
+        title: `${property.name} - ${formatPrice(property.price)}`,
+        description: `Luxury property located at ${property.address}`,
+        images: [
+          {
+            url: property.imageUrl,
+            width: 1200,
+            height: 630,
+            alt: property.name,
+          },
+        ],
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Property Not Found | Million Real Estate",
+      description: "The requested property could not be found.",
+    };
+  }
+}
+
+export default async function PropertyDetailPage({
+  params,
+}: PropertyDetailPageProps) {
+  const property = await getPropertyData(params.id);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -108,45 +96,6 @@ export default function PropertyDetailPage({
     });
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-muted rounded w-32 mb-8"></div>
-            <div className="h-96 bg-muted rounded-lg mb-8"></div>
-            <div className="space-y-4">
-              <div className="h-8 bg-muted rounded w-3/4"></div>
-              <div className="h-4 bg-muted rounded w-1/2"></div>
-              <div className="h-6 bg-muted rounded w-1/4"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !property) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-serif text-foreground mb-4">
-            Property Not Found
-          </h1>
-          <p className="text-muted-foreground mb-6">
-            {error || "The requested property could not be found."}
-          </p>
-          <Button onClick={() => router.back()} variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Go Back
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  const enabledImages = property.images.filter((img) => img.isEnabled);
-
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -162,46 +111,11 @@ export default function PropertyDetailPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Image Gallery */}
           <div className="lg:col-span-2">
-            <div className="space-y-4">
-              {/* Main Image */}
-              <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-muted">
-                <img
-                  src={
-                    enabledImages[selectedImageIndex]?.fileUrl ||
-                    property.imageUrl
-                  }
-                  alt={property.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm flex items-center gap-1">
-                  <Camera className="w-3 h-3" />
-                  {selectedImageIndex + 1} / {enabledImages.length}
-                </div>
-              </div>
-
-              {/* Image Thumbnails */}
-              {enabledImages.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {enabledImages.map((image, index) => (
-                    <button
-                      key={image.id}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                        selectedImageIndex === index
-                          ? "border-accent ring-2 ring-accent/20"
-                          : "border-transparent hover:border-muted-foreground/20"
-                      }`}
-                    >
-                      <img
-                        src={image.fileUrl || "/placeholder.svg"}
-                        alt={`${property.name} - Image ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <PropertyImageGallery
+              images={property.images}
+              propertyName={property.name}
+              fallbackImageUrl={property.imageUrl}
+            />
           </div>
 
           {/* Property Information */}
@@ -244,11 +158,15 @@ export default function PropertyDetailPage({
                 Owner Information
               </h3>
               <div className="flex items-start gap-4">
-                <img
-                  src={property.owner.photoUrl || "/placeholder.svg"}
-                  alt={property.owner.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
+                <div className="relative w-12 h-12">
+                  <Image
+                    src={property.owner.photoUrl || "/placeholder.svg"}
+                    alt={property.owner.name}
+                    fill
+                    className="rounded-full object-cover"
+                    sizes="48px"
+                  />
+                </div>
                 <div className="space-y-1">
                   <div className="font-medium">{property.owner.name}</div>
                   <div className="text-sm text-muted-foreground">

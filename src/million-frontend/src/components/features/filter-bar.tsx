@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface FilterBarProps {}
-
-export function FilterBar({}: FilterBarProps) {
+export function FilterBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
 

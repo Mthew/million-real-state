@@ -6,6 +6,7 @@ import { GeistMono } from "geist/font/mono";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import "./globals.css";
+import { Header } from "@/components/features/header";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body
         className={`font-sans antialiased ${playfair.variable} ${lato.variable} ${GeistMono.variable}`}
       >
+        <Header />
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
