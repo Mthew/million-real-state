@@ -132,11 +132,11 @@ million-real-state/                    # Monorepo root
 #### Frontend Screenshots
 
 **Property Listings Page**
-![Million Listings Page](million-listings-page.png)
+![Million Listings Page](./doc/million-listings-page.png)
 _Responsive property listings with advanced filtering capabilities_
 
 **Property Detail Page**
-![Million Property Detail Page](million-property-detail-page.png)
+![Million Property Detail Page](./doc/million-property-detail-page.png)
 _Immersive property detail view with gallery, owner information, and sales history_
 
 ### Backend
@@ -151,7 +151,7 @@ _Immersive property detail view with gallery, owner information, and sales histo
 
 #### API Documentation
 
-![Million API Documentation](million-api-docs.png)
+![Million API Documentation](./doc/million-api-docs.png)
 _Comprehensive Swagger/OpenAPI documentation for all endpoints_
 
 ### Infrastructure
